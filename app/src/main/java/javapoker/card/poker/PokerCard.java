@@ -2,7 +2,7 @@ package javapoker.card.poker;
 
 import javapoker.card.CardBase;
 
-public class PokerCard extends CardBase implements Comparable<PokerCard> {
+public class PokerCard extends CardBase<PokerCard> {
     int value;
     PokerSuit suit;
 

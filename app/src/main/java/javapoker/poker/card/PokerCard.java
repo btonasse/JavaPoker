@@ -1,8 +1,8 @@
 package javapoker.poker.card;
 
-import javapoker.base.card.CardBase;
+import javapoker.base.Card;
 
-public class PokerCard extends CardBase<PokerCard> {
+public class PokerCard extends Card<PokerCard> {
     int value;
     PokerSuit suit;
 

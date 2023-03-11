@@ -4,7 +4,8 @@
 package javapoker;
 
 import javapoker.poker.card.PokerCard;
-import javapoker.poker.card.PokerSuit;
+
+import javapoker.poker.deck.PokerDeck;
 
 public class App {
     public String getGreeting() {
@@ -13,7 +14,10 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
-        PokerCard aceOfSpades = new PokerCard("Ace", 1, PokerSuit.SPADES);
-        System.out.println(aceOfSpades);
+
+        PokerDeck pokerDeck = new PokerDeck();
+        for (PokerCard card : pokerDeck.getCards()) {
+            System.out.println(card);
+        }
     }
 }

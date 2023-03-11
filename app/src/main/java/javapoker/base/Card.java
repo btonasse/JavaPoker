@@ -1,9 +1,9 @@
-package javapoker.base.card;
+package javapoker.base;
 
-public abstract class CardBase<T> implements Comparable<T> {
+public abstract class Card<T> implements Comparable<T> {
     protected String name;
 
-    public CardBase(String name) {
+    public Card(String name) {
         this.name = name;
 
     }

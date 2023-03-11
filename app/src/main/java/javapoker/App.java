@@ -3,8 +3,8 @@
  */
 package javapoker;
 
-import javapoker.card.poker.PokerCard;
-import javapoker.card.poker.PokerSuit;
+import javapoker.poker.card.PokerCard;
+import javapoker.poker.card.PokerSuit;
 
 public class App {
     public String getGreeting() {

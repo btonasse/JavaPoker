@@ -12,14 +12,17 @@ public class PokerCard extends CardBase<PokerCard> {
         this.suit = suit;
     }
 
+    @Override
     public int compareTo(PokerCard other) {
         return this.value - other.value;
     }
 
+    @Override
     public String getName() {
         return this.name + " of " + this.suit;
     }
 
+    @Override
     public String toString() {
         return this.getName();
     }

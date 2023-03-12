@@ -4,15 +4,60 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public abstract class Deck<TCard> {
+public class Deck<TCard> {
     protected ArrayList<TCard> cards;
+    private Long seed;
 
-    public Deck(ArrayList<TCard> cards) {
-        this.cards = cards;
+    public Deck() {
+        this(null);
     }
 
-    public ArrayList<TCard> getCards() {
+    public Deck(Long seed) {
+        this.cards = new ArrayList<TCard>();
+        this.seed = seed;
+    }
+
+    public ArrayList<TCard> cards() {
         return this.cards;
+    }
+
+    public int size() {
+        return this.cards.size();
+    }
+
+    public void add(ArrayList<TCard> cards) {
+        for (TCard card : cards) {
+            this.cards.add(card);
+        }
+    }
+
+    public void add(TCard card) {
+        this.cards.add(card);
+    }
+
+    public TCard getRandomCard() {
+        Random generator = seed != null ? new Random(seed) : new Random();
+        int index = (int) (generator.nextDouble() * size());
+        return this.cards.get(index);
+    }
+
+    public ArrayList<TCard> removeCards(ArrayList<TCard> cards) {
+        ArrayList<TCard> removedCards = new ArrayList<TCard>();
+        for (TCard card : cards) {
+            int index = this.cards.indexOf(card);
+            if (index >= 0) {
+                removedCards.add(this.cards.remove(index));
+            }
+        }
+        return removedCards;
+    }
+
+    public ArrayList<TCard> removeCards(int[] cardIndexes) throws IndexOutOfBoundsException {
+        ArrayList<TCard> toRemove = new ArrayList<TCard>();
+        for (int index : cardIndexes) {
+            toRemove.add(this.cards.get(index));
+        }
+        return removeCards(toRemove);
     }
 
     public ArrayList<TCard> draw(int howMany) throws IndexOutOfBoundsException {
@@ -26,10 +71,6 @@ public abstract class Deck<TCard> {
     }
 
     public void shuffle() {
-        shuffle(null);
-    }
-
-    public void shuffle(Long seed) {
         if (seed != null) {
             Collections.shuffle(this.cards, new Random(seed));
         } else {
@@ -37,4 +78,5 @@ public abstract class Deck<TCard> {
         }
 
     }
+
 }

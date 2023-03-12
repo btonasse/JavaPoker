@@ -1,14 +1,17 @@
 package javapoker.poker.card;
 
 import javapoker.base.Card;
+import java.util.Arrays;
 
 public class PokerCard extends Card<PokerCard> {
-    int value;
-    PokerSuit suit;
+    private PokerSuit suit;
+    String[] cardNames = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
 
-    public PokerCard(String name, int value, PokerSuit suit) {
+    public PokerCard(String name, PokerSuit suit) throws IllegalArgumentException {
         super(name);
-        this.value = value;
+        if (Arrays.asList(cardNames).indexOf(name) == -1) {
+            throw new IllegalArgumentException(name + " is an invalid poker card name!");
+        }
         this.suit = suit;
     }
 
@@ -18,32 +21,29 @@ public class PokerCard extends Card<PokerCard> {
     }
 
     public int compareTo(PokerCard other, boolean aceHigh) {
-        int thisRealValue, otherRealValue;
-        if (!aceHigh) {
-            if (this.name == "Ace") {
-                thisRealValue = 1;
-            } else {
-                thisRealValue = this.value;
-            }
-            if (other.name == "Ace") {
-                otherRealValue = 1;
-            } else {
-                otherRealValue = other.value;
-            }
-        } else {
-            thisRealValue = this.value;
-            otherRealValue = other.value;
-        }
-        return thisRealValue - otherRealValue;
+        return getValue(aceHigh) - other.getValue(aceHigh);
     }
 
     @Override
     public String getName() {
-        return this.name + " of " + this.suit;
+        return this.name;
+    }
+
+    public PokerSuit getSuit() {
+        return this.suit;
+    }
+
+    public int getValue(boolean aceHigh) {
+        if (!aceHigh && this.name == "Ace") {
+            return 1;
+        } else {
+            return Arrays.asList(cardNames).indexOf(name) + 2;
+        }
+
     }
 
     @Override
     public String toString() {
-        return this.getName();
+        return this.name + " of " + this.suit;
     }
 }

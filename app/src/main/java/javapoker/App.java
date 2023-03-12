@@ -15,10 +15,10 @@ public class App {
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
 
-        PokerDeck pokerDeck = new PokerDeck();
-        long seed = 12345L;
-        pokerDeck.shuffle(seed);
-        for (PokerCard card : pokerDeck.getCards()) {
+        PokerDeck pokerDeck = new PokerDeck(12345L);
+        System.out.println(pokerDeck.getRandomCard());
+        pokerDeck.shuffle();
+        for (PokerCard card : pokerDeck.cards()) {
             System.out.println(card);
         }
     }

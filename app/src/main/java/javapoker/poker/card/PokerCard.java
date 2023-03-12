@@ -14,7 +14,27 @@ public class PokerCard extends Card<PokerCard> {
 
     @Override
     public int compareTo(PokerCard other) {
-        return this.value - other.value;
+        return compareTo(other, true);
+    }
+
+    public int compareTo(PokerCard other, boolean aceHigh) {
+        int thisRealValue, otherRealValue;
+        if (!aceHigh) {
+            if (this.name == "Ace") {
+                thisRealValue = 1;
+            } else {
+                thisRealValue = this.value;
+            }
+            if (other.name == "Ace") {
+                otherRealValue = 1;
+            } else {
+                otherRealValue = other.value;
+            }
+        } else {
+            thisRealValue = this.value;
+            otherRealValue = other.value;
+        }
+        return thisRealValue - otherRealValue;
     }
 
     @Override

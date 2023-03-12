@@ -16,6 +16,8 @@ public class App {
         System.out.println(new App().getGreeting());
 
         PokerDeck pokerDeck = new PokerDeck();
+        long seed = 12345L;
+        pokerDeck.shuffle(seed);
         for (PokerCard card : pokerDeck.getCards()) {
             System.out.println(card);
         }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.card.PokerSuit;
-import javapoker.poker.hand.PokerHand;
 
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.card.PokerSuit;
-//import javapoker.poker.deck.PokerDeck; why don't I need this import?
 
 public class PokerDeckTest {
     PokerDeck pokerDeck;

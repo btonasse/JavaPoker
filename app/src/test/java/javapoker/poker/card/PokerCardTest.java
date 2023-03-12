@@ -1,8 +1,5 @@
 package javapoker.poker.card;
 
-//import javapoker.poker.card.PokerCard;
-//import javapoker.poker.card.PokerSuit;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;

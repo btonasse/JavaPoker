@@ -12,18 +12,13 @@ public class DeckTest {
     GenericCard card1, card2, card3;
 
     private final class GenericCard extends Card<GenericCard> {
-        public GenericCard() {
-            super("GenericCard");
+        public GenericCard(String name) {
+            super(name);
         }
 
         @Override
         public int compareTo(GenericCard other) {
             return 0;
-        }
-
-        @Override
-        public String getName() {
-            return "GenericCard";
         }
     }
 
@@ -31,9 +26,9 @@ public class DeckTest {
     public void setUp() {
 
         deck = new Deck<GenericCard>(12345L);
-        card1 = new GenericCard();
-        card2 = new GenericCard();
-        card3 = new GenericCard();
+        card1 = new GenericCard("card1");
+        card2 = new GenericCard("card2");
+        card3 = new GenericCard("card3");
         deck.add(card1);
         deck.add(card2);
         deck.add(card3);
@@ -49,13 +44,13 @@ public class DeckTest {
     @Test
     public void shuffleTest() {
         deck.shuffle();
-        assertEquals(card3, deck.cards().get(1));
+        assertSame(card3, deck.cards().get(1));
 
     }
 
     @Test
     public void getRandomTest() {
-        assertEquals(card2, deck.getRandomCard());
+        assertSame(card2, deck.getRandomCard());
 
     }
 
@@ -88,4 +83,11 @@ public class DeckTest {
         assertEquals(1, deck.cards.size());
     }
 
+    @Test
+    public void getAllByName() {
+        deck.add(new GenericCard("card2"));
+        ArrayList<GenericCard> found = deck.getCardsByName("card2");
+        assertEquals(2, found.size());
+        assertTrue(found.stream().allMatch(card -> card.getName() == "card2"));
+    }
 }

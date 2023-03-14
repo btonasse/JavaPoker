@@ -4,20 +4,23 @@ import org.junit.jupiter.api.Test;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.card.PokerSuit;
+import javapoker.poker.deck.PokerDeck;
 
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 public class PokerHandTest {
     PokerHand hand;
+    PokerDeck deck;
 
     @BeforeEach
-    public void setUp() {
-        PokerCard card1, card2, card3, card4, card5, card6, card7;
-        card1 = new PokerCard("Ace", PokerSuit.SPADES);
-        card2 = new PokerCard("2", PokerSuit.SPADES);
-        card3 = new PokerCard("K", PokerSuit.SPADES);
+    void setUp() {
         hand = new PokerHand();
+        deck = new PokerDeck();
 
     }
+
 }

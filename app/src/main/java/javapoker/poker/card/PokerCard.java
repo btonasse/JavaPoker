@@ -1,17 +1,18 @@
 package javapoker.poker.card;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 import javapoker.base.Card;
-import java.util.Arrays;
 
 public class PokerCard extends Card<PokerCard> {
     private PokerSuit suit;
-    String[] cardNames = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+    private PokerRank rank;
 
-    public PokerCard(String name, PokerSuit suit) throws IllegalArgumentException {
-        super(name);
-        if (Arrays.asList(cardNames).indexOf(name) == -1) {
-            throw new IllegalArgumentException(name + " is an invalid poker card name!");
-        }
+    public PokerCard(PokerRank rank, PokerSuit suit) {
+        super(rank.name());
+        this.rank = rank;
         this.suit = suit;
     }
 
@@ -24,26 +25,29 @@ public class PokerCard extends Card<PokerCard> {
         return getValue(aceHigh) - other.getValue(aceHigh);
     }
 
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
     public PokerSuit getSuit() {
         return this.suit;
     }
 
+    public PokerRank getRank() {
+        return this.rank;
+    }
+
     public int getValue(boolean aceHigh) {
-        if (!aceHigh && this.name == "Ace") {
-            return 1;
-        } else {
-            return Arrays.asList(cardNames).indexOf(name) + 2;
-        }
+        return this.getRank().getNumericValue(aceHigh);
 
     }
 
     @Override
     public String toString() {
-        return this.name + " of " + this.suit;
+        return this.rank + " of " + this.suit;
+    }
+
+    public static ArrayList<PokerCard> getHighestNCards(ArrayList<PokerCard> cards, int howMany) {
+        assert cards.size() < howMany;
+        return cards.stream()
+                .sorted(Collections.reverseOrder())
+                .limit(howMany)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

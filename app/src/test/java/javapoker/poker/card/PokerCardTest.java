@@ -9,9 +9,9 @@ class PokerCardTest {
 
     @BeforeEach
     public void setUp() {
-        aceClubs = new PokerCard("Ace", PokerSuit.CLUBS);
-        twoClubs = new PokerCard("2", PokerSuit.CLUBS);
-        aceHearts = new PokerCard("Ace", PokerSuit.HEARTS);
+        aceClubs = new PokerCard(PokerRank.ACE, PokerSuit.CLUBS);
+        twoClubs = new PokerCard(PokerRank.TWO, PokerSuit.CLUBS);
+        aceHearts = new PokerCard(PokerRank.ACE, PokerSuit.HEARTS);
     }
 
     @Test
@@ -24,12 +24,5 @@ class PokerCardTest {
     @Test
     void getName() {
         assertEquals("Ace of Clubs", aceClubs.toString());
-    }
-
-    @Test
-    void invalidName() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new PokerCard("Aces", PokerSuit.HEARTS);
-        });
     }
 }

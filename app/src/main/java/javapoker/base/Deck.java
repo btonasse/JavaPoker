@@ -3,8 +3,9 @@ package javapoker.base;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.stream.Collectors;
 
-public class Deck<TCard> {
+public class Deck<TCard extends Card<TCard>> {
     protected ArrayList<TCard> cards;
     private Long seed;
 
@@ -39,6 +40,12 @@ public class Deck<TCard> {
         Random generator = seed != null ? new Random(seed) : new Random();
         int index = (int) (generator.nextDouble() * size());
         return this.cards.get(index);
+    }
+
+    public ArrayList<TCard> getCardsByName(String name) {
+        return this.cards().stream()
+                .filter(card -> card.getName() == name)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<TCard> removeCards(ArrayList<TCard> cards) {

@@ -1,6 +1,7 @@
 package javapoker.poker.combination;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.hand.PokerHandEnum;
@@ -13,7 +14,7 @@ public class Flush extends Combination implements FlushInterface {
     }
 
     @Override
-    protected int getIndividualValue() {
-        return this.getHighestCardValue(); //todo tiebreaker
+    protected Comparator<Flush> tieBreaker() {
+
     }
 }

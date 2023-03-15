@@ -1,6 +1,7 @@
 package javapoker.poker.combination;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.card.PokerRank;
@@ -14,8 +15,11 @@ public abstract class RankSet extends Combination {
         this.rank = rank;
     }
 
-    @Override
-    protected int getIndividualValue() {
-        return this.rank.getNumericValue(true);
+    protected PokerRank getRank() {
+        return this.rank;
+    }
+
+    protected Comparator<RankSet> highestRank() {
+        return Comparator.comparing(RankSet::getRank);
     }
 }

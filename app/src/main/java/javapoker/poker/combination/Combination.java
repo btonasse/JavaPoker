@@ -1,16 +1,20 @@
 package javapoker.poker.combination;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.hand.PokerHandEnum;
 
 public abstract class Combination implements Comparable<Combination> {
-    protected ArrayList<PokerCard> cards;
-    protected PokerHandEnum combination;
+    private ArrayList<PokerCard> cards;
+    private PokerHandEnum combination;
 
     public Combination(ArrayList<PokerCard> cards, PokerHandEnum combination) {
-        assert cards.size() == 5;
+        if (cards.size() != 5) {
+            throw new IllegalArgumentException("Combinations must have 5 cards.");
+        }
         this.cards = cards;
         this.combination = combination;
     }
@@ -19,22 +23,22 @@ public abstract class Combination implements Comparable<Combination> {
         return this.cards;
     }
 
+    public PokerHandEnum getCombination() {
+        return this.combination;
+    }
+
     @Override
     public int compareTo(Combination other) {
-        return this.getValue() - other.getValue();
+        return Comparator.comparing(Combination::getCombination)
+                .thenComparing(this.tieBreaker())
+                .thenComparing(this.highestCard())
+                .compare(this, other);
     }
 
-    protected int getHighestCardValue() {
-        return this.cards.stream()
-                .max(PokerCard::compareTo)
-                .get()
-                .getValue(false);
-    }
+    protected abstract Comparator<Combination> tieBreaker();
 
-    protected abstract int getIndividualValue(); // Must include a tie-breaker - maybe value needs to be a double so we add another 0 for each tie-breaker level
-
-    public int getValue() {
-        return this.getIndividualValue() + this.combination.ordinal() * 1000;
+    protected Comparator<? super Combination> highestCard() {
+        return Comparator.comparing(Combination::getCards, Collections.reverseOrder());
     }
 
 }

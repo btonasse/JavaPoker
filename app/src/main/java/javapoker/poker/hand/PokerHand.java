@@ -191,4 +191,8 @@ public class PokerHand extends PokerDeck implements Comparable<PokerHand> {
     // 2) Break this class up (especially getHighestCombination) and figure out where every method should live
     // 3) Figure out the role of the combination classes. Should they have static methods that return their own instances to help solve #2?
     // 4) Write tests!
+    // 5) Replace asserts with IllegalArgumentExceptions!
+    // 6) Handle when no combinations exist. How to handle highest card?
+    // 7) What about tiebreakers when highest card is the same? Need a better implementation of comparation in each combination class
+    // 8) Better handle the numeric value of each combination. Or maybe its redundant if we implement proper comparation
 }

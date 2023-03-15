@@ -11,7 +11,7 @@ public abstract class Combination implements Comparable<Combination> {
     private ArrayList<PokerCard> cards;
     private PokerHandEnum combination;
 
-    public Combination(ArrayList<PokerCard> cards, PokerHandEnum combination) {
+    public Combination(ArrayList<PokerCard> cards, PokerHandEnum combination) throws IllegalArgumentException {
         if (cards.size() != 5) {
             throw new IllegalArgumentException("Combinations must have 5 cards.");
         }

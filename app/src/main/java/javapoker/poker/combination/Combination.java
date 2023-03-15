@@ -37,7 +37,7 @@ public abstract class Combination implements Comparable<Combination> {
 
     protected abstract Comparator<Combination> tieBreaker();
 
-    protected Comparator<? super Combination> highestCard() {
+    protected Comparator<Combination> highestCard() {
         return Comparator.comparing(Combination::getCards, Collections.reverseOrder());
     }
 

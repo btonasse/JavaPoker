@@ -30,14 +30,16 @@ public abstract class Combination implements Comparable<Combination> {
     @Override
     public int compareTo(Combination other) {
         return Comparator.comparing(Combination::getCombination)
-                .thenComparing(this.tieBreaker())
-                .thenComparing(this.highestCard())
+                .thenComparing(this.tieBreaker(other))
+                .thenComparing(this.highestCard(other))
                 .compare(this, other);
     }
 
-    protected abstract Comparator<Combination> tieBreaker();
+    protected Comparator<Combination> tieBreaker(Combination other) {
+        return this.highestCard(other);
+    }
 
-    protected Comparator<Combination> highestCard() {
+    protected Comparator<Combination> highestCard(Combination other) {
         return Comparator.comparing(Combination::getCards, Collections.reverseOrder());
     }
 

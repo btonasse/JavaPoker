@@ -12,7 +12,12 @@ public class FourOfAKind extends RankSet {
         super(cards, PokerHandEnum.FOUR_OF_A_KIND, rank);
     }
 
-    protected Comparator<FourOfAKind> tieBreaker() {
-        return this.highestRank();
+    @Override
+    protected Comparator<Combination> tieBreaker(Combination other) {
+        if (other instanceof FourOfAKind) {
+            return this.highestCard((FourOfAKind) other);
+        }
+        return super.tieBreaker(other);
     }
+
 }

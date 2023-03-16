@@ -19,7 +19,7 @@ public abstract class RankSet extends Combination {
         return this.rank;
     }
 
-    protected Comparator<RankSet> highestRank() {
+    protected Comparator<RankSet> highestRank(RankSet other) {
         return Comparator.comparing(RankSet::getRank);
     }
 }

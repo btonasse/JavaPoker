@@ -8,6 +8,7 @@ import javapoker.poker.combination.Flush;
 import javapoker.poker.combination.FourOfAKind;
 import javapoker.poker.combination.FullHouse;
 import javapoker.poker.combination.Pair;
+import javapoker.poker.combination.SimpleStraight;
 import javapoker.poker.combination.Straight;
 import javapoker.poker.combination.StraightFlush;
 import javapoker.poker.combination.ThreeOfAKind;
@@ -28,7 +29,7 @@ public class PokerHand extends PokerDeck implements Comparable<PokerHand> {
     }
 
     public int compareTo(PokerHand other) {
-        return this.getHighestCombination().getValue() - other.getHighestCombination().getValue();
+        return this.getHighestCombination().compareTo(other.getHighestCombination());
         // todo (hands must be comparable so as to
         // return the highest card if combination
         // value is the same)
@@ -97,7 +98,7 @@ public class PokerHand extends PokerDeck implements Comparable<PokerHand> {
             if (tryFlush) {
                 return Optional.of(new StraightFlush(previousCards));
             } else {
-                return Optional.of(new Straight(previousCards));
+                return Optional.of(new SimpleStraight(previousCards));
             }
         }
         /* Try to get next card.
@@ -125,19 +126,15 @@ public class PokerHand extends PokerDeck implements Comparable<PokerHand> {
     }
 
     private HashMap<PokerRank, ArrayList<PokerCard>> groupByRank(ArrayList<PokerCard> cards) {
-        HashMap<PokerRank, ArrayList<PokerCard>> dict = new HashMap<>();
-        for (PokerRank rank : PokerRank.values()) {
-            dict.put(rank, this.getCardsByRank(rank));
-        }
-        return dict;
+        return this.cards().stream()
+                .collect(Collectors.groupingBy(PokerCard::getRank, HashMap::new,
+                        Collectors.toCollection(ArrayList::new)));
     }
 
     private HashMap<PokerSuit, ArrayList<PokerCard>> groupBySuit(ArrayList<PokerCard> cards) {
-        HashMap<PokerSuit, ArrayList<PokerCard>> dict = new HashMap<>();
-        for (PokerSuit suit : PokerSuit.values()) {
-            dict.put(suit, this.getCardsBySuit(suit));
-        }
-        return dict;
+        return this.cards().stream()
+                .collect(Collectors.groupingBy(PokerCard::getSuit, HashMap::new,
+                        Collectors.toCollection(ArrayList::new)));
     }
 
     private Optional<Flush> getHighestFlush(HashMap<PokerSuit, ArrayList<PokerCard>> suitGroups) {

@@ -1,20 +1,15 @@
 package javapoker.poker.combination;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.hand.PokerHandEnum;
 
-public class Flush extends Combination implements FlushInterface {
+public class Flush extends Combination implements IFlush {
     public Flush(ArrayList<PokerCard> cards) {
         super(cards, PokerHandEnum.FLUSH);
-        assert this.isFlush(cards) == true;
-
-    }
-
-    @Override
-    protected Comparator<Flush> tieBreaker() {
-
+        if (!this.isFlush(cards)) {
+            throw new IllegalArgumentException("A flush consists of 5 cards of the same suit");
+        }
     }
 }

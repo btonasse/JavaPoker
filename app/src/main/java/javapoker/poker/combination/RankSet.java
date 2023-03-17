@@ -8,18 +8,24 @@ import javapoker.poker.card.PokerRank;
 import javapoker.poker.hand.PokerHandEnum;
 
 public abstract class RankSet extends Combination {
-    private PokerRank rank;
+    private PokerRank highestSetRank;
 
     public RankSet(ArrayList<PokerCard> cards, PokerHandEnum combination, PokerRank rank) {
         super(cards, combination);
-        this.rank = rank;
+        this.highestSetRank = rank;
     }
 
-    protected PokerRank getRank() {
-        return this.rank;
+    protected PokerRank getHighestSetRank() {
+        return this.highestSetRank;
     }
 
-    protected Comparator<RankSet> highestRank(RankSet other) {
-        return Comparator.comparing(RankSet::getRank);
+    @Override
+    protected Comparator<Combination> tieBreaker(Combination other) {
+        if (this.getClass() == other.getClass()) {
+            return Comparator.comparing(comb -> this.getHighestSetRank());
+        } else {
+            throw new IllegalArgumentException("Cannot compare non-ranksets by rank");
+        }
     }
+
 }

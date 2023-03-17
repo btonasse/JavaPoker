@@ -18,7 +18,7 @@ public class Straight extends Combination {
                 .count() == 2;
     }
 
-    protected Comparator<Straight> tieBreaker() {
+    protected Comparator<Combination> tieBreaker(Combination other) {
         if (this.isLowAce()) {
             return 5;
         }

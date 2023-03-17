@@ -44,7 +44,9 @@ public class PokerCard extends Card<PokerCard> {
     }
 
     public static ArrayList<PokerCard> getHighestNCards(ArrayList<PokerCard> cards, int howMany) {
-        assert cards.size() < howMany;
+        if (cards.size() >= howMany) {
+            throw new IllegalArgumentException("Tried to get more cards than available cards");
+        }
         return cards.stream()
                 .sorted(Collections.reverseOrder())
                 .limit(howMany)

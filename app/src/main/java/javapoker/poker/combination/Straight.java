@@ -1,14 +1,15 @@
 package javapoker.poker.combination;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javapoker.poker.card.PokerCard;
 import javapoker.poker.card.PokerRank;
 import javapoker.poker.hand.PokerHandEnum;
 
-public class Straight extends Combination {
-    public Straight(ArrayList<PokerCard> cards) {
-        super(cards, PokerHandEnum.STRAIGHT);
+public abstract class Straight extends Combination {
+    public Straight(ArrayList<PokerCard> cards, PokerHandEnum combination) {
+        super(cards, combination);
     }
 
     private boolean isLowAce() {
@@ -18,11 +19,21 @@ public class Straight extends Combination {
                 .count() == 2;
     }
 
-    protected Comparator<Combination> tieBreaker(Combination other) {
+    private PokerRank getStraightHighestRank() {
         if (this.isLowAce()) {
-            return 5;
+            return PokerRank.FIVE;
         }
-        return this.getHighestCardValue();
+        return this.getCards().stream()
+                .max(Comparator.comparing(PokerCard::getRank))
+                .get().getRank();
+    }
+
+    @Override
+    protected Comparator<Combination> tieBreaker(Combination other) {
+        if (this.getClass() != other.getClass()) {
+            throw new IllegalArgumentException("Can only compare two straights");
+        }
+        return Comparator.comparing(comb -> this.getStraightHighestRank());
     }
 
 }

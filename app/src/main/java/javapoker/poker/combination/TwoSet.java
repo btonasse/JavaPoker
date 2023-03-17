@@ -23,7 +23,7 @@ public class TwoSet extends RankSet {
     protected Comparator<Combination> tieBreaker(Combination other) {
         if (this.getClass() == other.getClass()) {
             return super.tieBreaker(other)
-                    .thenComparing(comb -> getSecondHighestSetRank());
+                    .thenComparing(comb -> this.getSecondHighestSetRank());
         } else {
             throw new IllegalArgumentException("Cannot compare non-twosets by second rank");
         }

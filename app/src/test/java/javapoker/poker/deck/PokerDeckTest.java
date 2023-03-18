@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import javapoker.poker.card.PokerCard;
@@ -62,4 +63,13 @@ public class PokerDeckTest {
         assertTrue(nextAny.getRank() == PokerRank.THREE && nextClubs.getSuit() == PokerSuit.CLUBS);
     }
 
+    @Test
+    void groupingMethods() {
+        HashMap<PokerRank, ArrayList<PokerCard>> rankGroup = pokerDeck.groupByRank();
+        assertEquals(4, rankGroup.get(PokerRank.EIGHT).size());
+        assertTrue(rankGroup.get(PokerRank.EIGHT).stream().allMatch(card -> card.getRank() == PokerRank.EIGHT));
+        HashMap<PokerSuit, ArrayList<PokerCard>> suitGroup = pokerDeck.groupBySuit();
+        assertEquals(13, suitGroup.get(PokerSuit.SPADES).size());
+        assertTrue(suitGroup.get(PokerSuit.SPADES).stream().allMatch(card -> card.getSuit() == PokerSuit.SPADES));
+    }
 }

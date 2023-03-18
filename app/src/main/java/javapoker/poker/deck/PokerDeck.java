@@ -1,6 +1,7 @@
 package javapoker.poker.deck;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.Optional;
@@ -73,6 +74,18 @@ public class PokerDeck extends Deck<PokerCard> {
     public Optional<PokerCard> getCardBySuitAndValue(PokerSuit suit, int value, boolean aceHigh) {
         return this.cards().stream()
                 .filter(card -> card.getSuit() == suit && card.getValue(aceHigh) == value).findFirst();
+    }
+
+    public HashMap<PokerRank, ArrayList<PokerCard>> groupByRank() {
+        return this.cards().stream()
+                .collect(Collectors.groupingBy(PokerCard::getRank, HashMap::new,
+                        Collectors.toCollection(ArrayList::new)));
+    }
+
+    public HashMap<PokerSuit, ArrayList<PokerCard>> groupBySuit() {
+        return this.cards().stream()
+                .collect(Collectors.groupingBy(PokerCard::getSuit, HashMap::new,
+                        Collectors.toCollection(ArrayList::new)));
     }
 
     protected Optional<PokerCard> getNextCard(PokerCard current, boolean matchingSuit) {

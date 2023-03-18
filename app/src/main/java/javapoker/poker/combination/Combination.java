@@ -31,16 +31,22 @@ public abstract class Combination implements Comparable<Combination> {
     public int compareTo(Combination other) {
         return Comparator.comparing(Combination::getCombination)
                 .thenComparing(this.tieBreaker(other))
-                .thenComparing(this.highestCard(other))
+                .thenComparing(this.highestUniqueCard(other))
                 .compare(this, other);
-    }
+    } // apparently this is inefficient because thenComparing is not skipped. Need to do conditionals.
 
     protected Comparator<Combination> tieBreaker(Combination other) {
-        return this.highestCard(other);
+        return this.highestUniqueCard(other);
     }
 
-    protected Comparator<Combination> highestCard(Combination other) {
-        return Comparator.comparing(Combination::getCards, Collections.reverseOrder());
+    protected Comparator<Combination> highestUniqueCard(Combination other) {
+        return Comparator.comparing(Combination::getCards, (cards1, cards2) -> {
+            ArrayList<PokerCard> copy1 = new ArrayList<>(cards1);
+            ArrayList<PokerCard> copy2 = new ArrayList<>(cards2);
+            copy1.removeAll(cards2);
+            copy2.removeAll(cards1);
+            return copy1.isEmpty() ? 0 : Collections.max(copy1).compareTo(Collections.max(copy2));
+        });
     }
 
 }

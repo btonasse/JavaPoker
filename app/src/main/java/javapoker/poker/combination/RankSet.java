@@ -21,10 +21,10 @@ public abstract class RankSet extends Combination {
 
     @Override
     protected Comparator<Combination> tieBreaker(Combination other) {
-        if (this.getClass() == other.getClass()) {
+        if (other instanceof RankSet) {
             return Comparator.comparing(comb -> this.getHighestSetRank());
         } else {
-            throw new IllegalArgumentException("Cannot compare non-ranksets by rank");
+            return super.tieBreaker(other);
         }
     }
 

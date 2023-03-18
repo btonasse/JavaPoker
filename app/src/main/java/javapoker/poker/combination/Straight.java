@@ -30,10 +30,10 @@ public abstract class Straight extends Combination {
 
     @Override
     protected Comparator<Combination> tieBreaker(Combination other) {
-        if (this.getClass() != other.getClass()) {
-            throw new IllegalArgumentException("Can only compare two straights");
+        if (other instanceof Straight) {
+            return Comparator.comparing(comb -> this.getStraightHighestRank());
         }
-        return Comparator.comparing(comb -> this.getStraightHighestRank());
+        return super.tieBreaker(other);
     }
 
 }

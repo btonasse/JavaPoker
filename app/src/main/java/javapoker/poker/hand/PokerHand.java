@@ -42,7 +42,7 @@ public class PokerHand extends PokerDeck implements Comparable<PokerHand> {
             return straight.get();
         }
         // Now group cards by rank and check for sets
-        HashMap<PokerRank, ArrayList<PokerCard>> ranks = this.groupByRank(this.cards);
+        HashMap<PokerRank, ArrayList<PokerCard>> ranks = this.groupByRank();
         Optional<ArrayList<PokerCard>> set = this.getHighestSet(ranks);
         if (set.isPresent()) {
             int size = set.get().size();
@@ -60,7 +60,7 @@ public class PokerHand extends PokerDeck implements Comparable<PokerHand> {
                 }
                 // If no full house, check for flush and straight. Otherwise return three of a kind
                 else {
-                    HashMap<PokerSuit, ArrayList<PokerCard>> suits = this.groupBySuit(this.cards);
+                    HashMap<PokerSuit, ArrayList<PokerCard>> suits = this.groupBySuit();
                     Optional<Flush> flush = this.getHighestFlush(suits);
                     if (flush.isPresent()) {
                         return flush.get();
@@ -123,18 +123,6 @@ public class PokerHand extends PokerDeck implements Comparable<PokerHand> {
                 .flatMap(Optional::stream)
                 .max(Straight::compareTo);
 
-    }
-
-    private HashMap<PokerRank, ArrayList<PokerCard>> groupByRank(ArrayList<PokerCard> cards) {
-        return this.cards().stream()
-                .collect(Collectors.groupingBy(PokerCard::getRank, HashMap::new,
-                        Collectors.toCollection(ArrayList::new)));
-    }
-
-    private HashMap<PokerSuit, ArrayList<PokerCard>> groupBySuit(ArrayList<PokerCard> cards) {
-        return this.cards().stream()
-                .collect(Collectors.groupingBy(PokerCard::getSuit, HashMap::new,
-                        Collectors.toCollection(ArrayList::new)));
     }
 
     private Optional<Flush> getHighestFlush(HashMap<PokerSuit, ArrayList<PokerCard>> suitGroups) {

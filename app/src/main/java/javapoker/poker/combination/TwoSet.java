@@ -21,11 +21,11 @@ public class TwoSet extends RankSet {
 
     @Override
     protected Comparator<Combination> tieBreaker(Combination other) {
-        if (this.getClass() == other.getClass()) {
+        if (other instanceof TwoSet) {
             return super.tieBreaker(other)
                     .thenComparing(comb -> this.getSecondHighestSetRank());
         } else {
-            throw new IllegalArgumentException("Cannot compare non-twosets by second rank");
+            return super.tieBreaker(other);
         }
     }
 
